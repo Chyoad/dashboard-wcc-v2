@@ -15,8 +15,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients= Client::all();
-        return view('client.index', [
+        $clients = Client::all();
+        return view('home', [
             'clients' => $clients
         ]);
     }
