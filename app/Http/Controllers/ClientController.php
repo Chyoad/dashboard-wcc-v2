@@ -15,8 +15,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients= Client::all();
-        return view('client.index', [
+        $clients = Client::all();
+        return view('home', [
             'clients' => $clients
         ]);
     }
@@ -96,6 +96,7 @@ class ClientController extends Controller
     {
         $item = Client::findOrFail($id);
         $item->delete();
-        return redirect()->route('client.index');
+
+        return redirect()->route('home');
     }
 }
