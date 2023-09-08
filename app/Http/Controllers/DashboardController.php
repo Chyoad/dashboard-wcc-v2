@@ -21,16 +21,19 @@ class DashboardController extends Controller
         ]);
 
         // Create "where" Query object for RouterOS
-        $userQuery = new Query('/ip/hotspot/ip-binding/print');
-        $userQuery->where('profile', 'default');
-        //$userQuery = new Query('/ip/hotspot/user/print');
+        $ipQuery = new Query('/ip/hotspot/ip-binding/print');
+        $ipQuery->where('comment','wifi coin');
+
+        $resourceQuery = new Query('/system/resource/print');
 
         // Send the query and read the response from RouterOS
-        $totalUserQuery = $client->query($userQuery)->read();
-        $countUser = count($totalUserQuery);
+        $ip_address = $client->query($ipQuery)->read();
+        $resource = $client->query($resourceQuery)->read();
 
+        //dd($resource[0]['board-name']);
         return view('dashboard.index', [
-            'countUser' => $countUser, 
+            'ip_address' => $ip_address[0]['address'],
+            'board_name' => $resource[0]['board-name'], 
             'id' => $id,
         ]);
         

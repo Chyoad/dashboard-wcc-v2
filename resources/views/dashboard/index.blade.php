@@ -80,7 +80,7 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">IP Address</h5>
-                    {{-- <span class="h4 font-weight-bold">{{ $identityQuery[0]['address'] }}</span> --}}
+                    <span class="h4 font-weight-bold">{{ $ip_address }}</span>
                 </div>
             </div>
         </div>
@@ -148,7 +148,7 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">Board Name</h5>   
-                    {{-- <span class="h4 font-weight-bold">{{ $typeQuery[0]['board-name'] }}</span> --}}
+                    <span class="h4 font-weight-bold">{{ $board_name }}</span>
                 </div>
             </div>
         </div>

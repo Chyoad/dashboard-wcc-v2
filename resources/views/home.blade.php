@@ -38,9 +38,13 @@
                                 <td>{{ $item->ip }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>
-                                    <a href="{{ route('client.edit', $item->id) }}"><i class="fas fa-cog mr-20 fa-xl"></i></a>
-                                    <a href="{{ route('client.destroy', $item->id) }}"><i class="fas fa-trash mr-20 fa-xl"></i></a>
-                                    <a href="{{ route('dashboard.show', $item->id) }}"><i class="fas fa-plug mr-20 fa-xl"></i></a>
+                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('client.destroy', $item->id) }}" method="POST">
+                                        <a href="{{ route('client.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i></a>
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                                        <a href="{{ route('dashboard.show', $item->id) }}" class="btn btn-sm btn-success    "><i class="fas fa-plug"></i></a>
+                                    </form>
                                 </td>
                             </tr>
                             @endforeach
