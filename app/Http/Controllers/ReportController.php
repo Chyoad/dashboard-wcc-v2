@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use Illuminate\Http\Request;
-use App\Http\Requests\ClientRequest;
+use App\Models\Report;
 
-class ClientController extends Controller
+class ReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients= Client::all();
-        return view('client.index', [
-            'clients' => $clients
+        //
+        $reports= Report::all();
+        return view('report.index', [
+            'reports' => $reports
         ]);
     }
 
@@ -28,7 +28,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-         return view('client.create');
+        //
     }
 
     /**
@@ -37,12 +37,9 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-        $client = Client::create($data);
-
-        return redirect()->route('home');
+        //
     }
 
     /**
@@ -64,10 +61,7 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $item = Client::findOrFail($id);
-        return view('client.edit', [
-            'item' => $item
-        ]);
+        //
     }
 
     /**
@@ -79,11 +73,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->all();
-        $item = Client::findOrFail($id);
-        $item->update($data);
-
-        return redirect()->route('home');
+        //
     }
 
     /**
@@ -94,8 +84,6 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $item = Client::findOrFail($id);
-        $item->delete();
-        return redirect()->route('home');
+        //
     }
 }

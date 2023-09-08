@@ -6,7 +6,7 @@
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title mb-30">
-                    <h2>{{ __('Pengaturan') }}</h2>
+                    <h2>{{ __('Report') }}</h2>
                    
                 </div>
             </div>

@@ -33,6 +33,28 @@
         </a>
     </li> --}}
 
+    <li class="nav-item @if(request()->routeIs('user')) active @endif">
+        <a href="{{ route('home') }}">
+            <span class="icon">
+                <svg width="22" height="22" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                </svg>
+            </span>
+            <span class="text">{{ __('Pengguna') }}</span>
+        </a>
+    </li>
+
+    <li class="nav-item @if(request()->routeIs('setting')) active @endif">
+        <a href="{{ route('setting.index') }}">
+            <span class="icon">
+                <svg width="22" height="22" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                </svg>
+            </span>
+            <span class="text">{{ __('Pengaturan') }}</span>
+        </a>
+    </li>
+
     <li class="nav-item @if(request()->routeIs('about')) active @endif">
         <a href="{{ route('about') }}">
             <span class="icon">
@@ -43,5 +65,17 @@
             <span class="text">{{ __('About us') }}</span>
         </a>
     </li>
+
+    <li class="nav-item @if(request()->routeIs('report')) active @endif">
+        <a href="{{ route('report.index') }}">
+            <span class="icon">
+                <svg width="22" height="22" aria-hidden="true" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                </svg>
+            </span>
+            <span class="text">{{ __('Report') }}</span>
+        </a>
+    </li>
+
 
 </ul>

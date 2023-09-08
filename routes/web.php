@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\ReportController;
 
 
 /*
@@ -46,6 +48,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::resource('client', ClientController::class);
+    Route::resource('setting', SettingController::class);
+    Route::resource('report', ReportController::class);
     // Route::get('client', [\App\Http\Controllers\ClientController::class, 'index'])->name('client-index');
     // Route::POST('client/store', [\App\Http\Controllers\ClientController::class, 'store'])->name('client-store');
 });
