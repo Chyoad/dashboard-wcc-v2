@@ -83,7 +83,7 @@ class ClientController extends Controller
         $item = Client::findOrFail($id);
         $item->update($data);
 
-        return redirect()->route('client.index');
+        return redirect()->route('home');
     }
 
     /**
@@ -96,7 +96,6 @@ class ClientController extends Controller
     {
         $item = Client::findOrFail($id);
         $item->delete();
-
         return redirect()->route('home');
     }
 }
