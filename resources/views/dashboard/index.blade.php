@@ -107,13 +107,12 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">Online User</h5>
-                     <span class="h4 font-weight-bold" id="active-user">
-                        
-                    </span>
+                     <span class="h4 font-weight-bold" id="active-user"></span>
                 </div>
             </div>
         </div>
     </div>
+   
     <div class="col-lg-3">
         <div class="card card-stats">
             <div class="card-body d-flex align-items-center">
@@ -121,12 +120,13 @@
                 <i class="fa-solid fa-wifi" style="color: #ffffff;"></i>
                 </div>
                 <div>
-                    <h5 class="card-title mb-2  small">Internet Status</h5>
-                    <span class="h4 font-weight-bold">Online</span>
+                    <h5 class="card-title mb-2  small">NodeMCU Status</h5>
+                    <span class="h4 font-weight-bold" id="status"></span>
                 </div>
             </div>
         </div>
     </div>
+    
     <div class="col-lg-3 mt-4">
         <div class="card card-stats">
             <div class="card-body d-flex align-items-center">
@@ -223,6 +223,15 @@
             url = url.replace(':id', id);
 
             $('#user').load(url);
+        }
+
+    setInterval('status();',1000);
+    function status() {
+            var id = {{ $id }} ;
+            var url = "{{ route('dashboard.status', ['id' => ':id']) }}";
+            url = url.replace(':id', id);
+
+            $('#status').load(url);
         }
 
 </script>
