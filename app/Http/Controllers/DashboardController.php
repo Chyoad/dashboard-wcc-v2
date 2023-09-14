@@ -2,119 +2,169 @@
 
 namespace App\Http\Controllers;
 
-use RouterOS\Query;
-use RouterOS\Client;
+use App\Models\RouterosApi;
 use Illuminate\Http\Request;
 use App\Models\Client as ClientModel;
 
 class DashboardController extends Controller
 {
     public function show($id){
+
         $item = ClientModel::findOrFail($id);
 
-        // Initiate client with config object
-        $client = new Client([
-            'host' => $item['ip'],
-            'user' => $item['name'],
-            'pass' => $item['pass'],
-            'port' => 8728,
-        ]);
+        $ip = $item['ip'];
+        $user = $item['name'];
+        $password = $item['pass'];
 
-        $ipQuery = (new Query('/ip/hotspot/ip-binding/print'))
-            //->where('comment','wifi coin')
-            ->where('comment','NodeMCU');
-            // ->operations('|');
+        $API = new RouterosApi();
+        $API->debug = false;
 
-        
+        if ($API->connect($ip, $user, $password)) {
+            $ip_address = $API->comm('/ip/hotspot/ip-binding/print', array(
+                '?comment' => 'NodeMCU'
+            ));
 
+            // $user = $API->comm('/ip/hotspot/user/print', array(
+            //     '?profile' => 'default',
+            // ));
 
-        $interfaceQuery = (new Query('/interface/ethernet/print'));
+            $resource = $API->comm('/system/resource/print');
+            $identity = $API->comm('/system/identity/print');
 
-        $resourceQuery = new Query('/system/resource/print');
+            // $limitUptimeArray = array(); // Initialize an empty array to store limit-uptime values
 
-        // Send the query and read the response from RouterOS
-        $ip_address = $client->query($ipQuery)->read();
-        $resource = $client->query($resourceQuery)->read();
-        $interface = $client->query($interfaceQuery)->read();
+            // foreach ($user as $userInfo) {
+            //     // Check if the 'limit-uptime' key exists in the current user's information
+            //     if (isset($userInfo['limit-uptime'])) {
 
-    
-        return view('dashboard.index', [
-            'ip_address' => $ip_address[0]['address'],
-            'board_name' => $resource[0]['board-name'], 
-            'id' => $id,
-        ]);
-        
+            //          $duration = $userInfo['limit-uptime'];
+
+            //         list($days, $hours) = sscanf($duration, "%dd%dh");
+            //         $totalHours = ($days * 24) + $hours;
+
+            //         // Add the 'limit-uptime' value to the $limitUptimeArray
+            //         $limitUptimeArray[] = $totalHours;
+            //     }
+            // }
+            
+            // $total = array_sum($limitUptimeArray);
+            
+            // dd($total*1000);
+
+            $data = [
+                'id' => $id,
+                'ip_address' => $ip_address[0]['address'],
+                'board_name'  => $resource[0]['board-name'],
+                'identity' => $identity[0]['name'],
+            ];
+
+            //dd($data);
+
+            return view('dashboard.index', $data);
+
+        } else{
+            return view('failed');
+        }
     }
 
     public function uptime($id) 
     {
         $item = ClientModel::findOrFail($id);
 
-        $client = new Client([
-            'host' => $item['ip'],
-            'user' => $item['name'],
-            'pass' => $item['pass'],
-            'port' => 8728,
-        ]); 
+        $ip = $item['ip'];
+        $user = $item['name'];
+        $password = $item['pass'];
 
-        $uptime = new Query('/system/resource/print');
+        $API = new RouterosApi();
+        $API->debug = false;
 
-        $uptimeQuery = $client->query($uptime)->read();
+        if ($API->connect($ip, $user, $password)) {
+            $resource = $API->comm('/system/resource/print');
 
-        $data = [
-            'id' => $id,
-            'uptime' => $uptimeQuery['0']['uptime'],
-        ];
+            $data = [
+                'id' => $id,
+                'uptime'  => $resource[0]['uptime'],
+            ];
 
-        // dd($data);
+            //dd($data);  
 
-        return view('realtime.uptime', $data);
+            return view('realtime.uptime', $data);
+
+        } else{
+            return view('failed');
+        }
     }
 
     public function status($id) 
     {
         $item = ClientModel::findOrFail($id);
 
-        $client = new Client([
-            'host' => $item['ip'],
-            'user' => $item['name'],
-            'pass' => $item['pass'],
-            'port' => 8728,
-        ]); 
+        $ip = $item['ip'];
+        $user = $item['name'];
+        $password = $item['pass'];
 
+        $API = new RouterosApi();
+        $API->debug = false;
 
-        $ipQuery = (new Query('/ip/hotspot/ip-binding/print'))
-            //->where('comment','wifi coin')
-            ->where('comment','NodeMCU');
-            // ->operations('|');        
-
-        $ip_address = $client->query($ipQuery)->read();
-        $ip = $ip_address[0]['address']; 
-
-        $responseQuery = (new Query('/ping'))
-            ->equal('address', $ip )
-            ->equal('count', '1');
-
-        $response = $client->query($responseQuery)->read();
+        if ($API->connect($ip, $user, $password)) {
+            $ip_binding = $API->comm('/ip/hotspot/ip-binding/print', array(
+                '?comment' => 'NodeMCU'
+            ));
+            $ip_address = $ip_binding[0]['address'];
+            $response = $API->comm('/ping', array(
+                'address' => $ip_address,
+                'count' => '1'
+            ));
 
             if($response[0]['packet-loss'] === '0' ){    
                 return $status = 'online';
             } else {
                 return $status = 'offline';
-            }
-        
+            };
 
-        $data = [
-            'id' => $id,
-            'status' => $status,
-        ];
+            $data = [
+                'id' => $id,
+                'node_mcu_status' => $status,
+            ];
 
-        // dd($data);
+            //dd($data);
 
-        return view('realtime.status', $data);
+            return view('realtime.status', $data);
 
+        } else{
+            return view('failed');
+        }        
     }
 
-    
+    public function income($id)
+    {
+        $item = ClientModel :: findOrFail($id);
+
+        $ip = $item['ip'];
+        $user = $item['name'];
+        $password = $item['pass'];
+
+        $API = new RouterosApi();
+        $API->debug = false;
+
+        if ($API->connect($ip, $user, $password)) {
+            $hotspot_user = $API->comm('/ip/hotspot/user/print', array(
+                '?profile' => 'default'
+            ));
+
+            $data = [
+                'id' => $id,
+                'total_income'  => count($hotspot_user) * 1000,
+            ];
+
+            //dd($data);
+
+            return view('realtime.income', $data);
+
+        } else{
+            return view('failed');
+        }
+
+    }
 
 }

@@ -1,1 +1,1 @@
-{{ $status }}
+{{ $node_mcu_status }}
