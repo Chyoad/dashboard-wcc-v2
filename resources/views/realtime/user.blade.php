@@ -1,1 +1,1 @@
-{{ $countUsers }} Users
+{{ $count_user }} Users

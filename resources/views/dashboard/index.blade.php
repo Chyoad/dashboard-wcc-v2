@@ -93,7 +93,7 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">Total User</h5>
-                    <span class="h4 font-weight-bold" id="user">0 Users</span>
+                    <span class="h4 font-weight-bold" id="user">Loading...</span>
                 </div>
             </div>
         </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">Online User</h5>
-                     <span class="h4 font-weight-bold" id="active-user"></span>
+                     <span class="h4 font-weight-bold" id="active-user">Loading...</span>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">NodeMCU Status</h5>
-                    <span class="h4 font-weight-bold" id="status"></span>
+                    <span class="h4 font-weight-bold" id="status">Loading...</span>
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">System Runtime</h5>
-                    <span class="h4 font-weight-bold" id="uptime"></span>
+                    <span class="h4 font-weight-bold" id="uptime">Loading...</span>
                 </div>
             </div>
         </div>
@@ -174,7 +174,7 @@
                 </div>
                 <div>
                     <h5 class="card-title mb-2  small">Total Income</h5>
-                    {{-- <span class="h4 font-weight-bold">Rp.{{ number_format($countUser*1000) }}</span> --}}
+                    <span class="h4 font-weight-bold" id="income">Loading...</span>
                 </div>
             </div>
         </div>
@@ -214,7 +214,7 @@
             url = url.replace(':id', id);
 
             $('#active-user').load(url);
-        }
+        }
 
     setInterval('user();',1000);
     function user() {
@@ -232,6 +232,15 @@
             url = url.replace(':id', id);
 
             $('#status').load(url);
+        }
+
+    setInterval('income();',1000);
+    function income() {
+            var id = {{ $id }} ;
+            var url = "{{ route('dashboard.income', ['id' => ':id']) }}";
+            url = url.replace(':id', id);
+
+            $('#income').load(url);
         }
 
 </script>
