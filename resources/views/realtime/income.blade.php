@@ -1,0 +1,1 @@
+Rp. {{ $total_income }}
