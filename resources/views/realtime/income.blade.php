@@ -1,1 +1,0 @@
-Rp.{{ number_format($total_income) }}

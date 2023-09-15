@@ -61,6 +61,7 @@
             <div class="col-md-6">
                 <div class="title mb-30">
                     <h2>{{ __('Dashboard') }}</h2>
+                    <h3>{{ $identity }}</h3>
                 </div>
             </div>
             <!-- end col -->
@@ -72,114 +73,87 @@
     <!-- Cards Row -->
     <div class="row">
     <!-- ========== First Card with Blue Icon Box ========== -->
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box blue">
-                <i class="fa-solid fa-clipboard" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">IP Address</h5>
-                    <span class="h4 font-weight-bold">{{ $ip_address }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box red">
-                <i class="fa-solid fa-user" style="color: #ffffff;" ></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Total User</h5>
-                    <span class="h4 font-weight-bold" id="user">Loading...</span>
+        <div class="col-lg-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box blue">
+                    <i class="fa-solid fa-clipboard" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">IP Address</h5>
+                        <span class="h4 font-weight-bold">{{ $ip_address }}</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box green">
-                <i class="fas fa-users" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Online User</h5>
-                     <span class="h4 font-weight-bold" id="active-user">Loading...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-   
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box yellow">
-                <i class="fa-solid fa-wifi" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">NodeMCU Status</h5>
-                    <span class="h4 font-weight-bold" id="status">Loading...</span>
+        <div class="col-lg-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box yellow">
+                    <i class="fa-solid fa-wifi" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">NodeMCU Status</h5>
+                        <span class="h4 font-weight-bold" id="status">Loading...</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box purple">
-                <i class="fas fa-cloud" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">System Runtime</h5>
-                    <span class="h4 font-weight-bold" id="uptime">Loading...</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box orange">
-                <i class="fa-solid fa-microchip" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Board Name</h5>   
-                    <span class="h4 font-weight-bold">{{ $board_name }}</span>
+        <div class="col-lg-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box red">
+                    <i class="fa-solid fa-user" style="color: #ffffff;" ></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">Total User</h5>
+                        <span class="h4 font-weight-bold" id="user">Loading...</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box birumuda">
-                <i class="fa-solid fa-money-bill" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Today Income</h5>
-                    {{-- <span class="h4 font-weight-bold"></span> --}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box pink">
-                <i class="fa-solid fa-money-bills" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Total Income</h5>
-                    <span class="h4 font-weight-bold" id="income">Loading...</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        </div> 
+    </div>   
 
+    <div class="row">
+        <div class="col-lg-4 mt-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box purple">
+                    <i class="fas fa-cloud" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">System Runtime</h5>
+                        <span class="h4 font-weight-bold" id="uptime">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mt-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box orange">
+                    <i class="fa-solid fa-microchip" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">Board Name</h5>   
+                        <span class="h4 font-weight-bold">{{ $board_name }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mt-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box birumuda">
+                    <i class="fa-solid fa-money-bill" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">User Active</h5>
+                    <span class="h4 font-weight-bold" id="today-income">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- End Cards Row -->
     <div class="row mt-3">
@@ -234,13 +208,22 @@
             $('#status').load(url);
         }
 
-    setInterval('income();',1000);
-    function income() {
+    setInterval('todayIncome();',1000);
+    function todayIncome() {
             var id = {{ $id }} ;
-            var url = "{{ route('dashboard.income', ['id' => ':id']) }}";
+            var url = "{{ route('user.activeUser', ['id' => ':id']) }}";
             url = url.replace(':id', id);
 
-            $('#income').load(url);
+            $('#today-income').load(url);
+        }
+
+    setInterval('totalIncome();',1000);
+    function totalIncome() {
+            var id = {{ $id }} ;
+            var url = "{{ route('user.user', ['id' => ':id']) }}";
+            url = url.replace(':id', id);
+
+            $('#total-income').load(url);
         }
 
 </script>

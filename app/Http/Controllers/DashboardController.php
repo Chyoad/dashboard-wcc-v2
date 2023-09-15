@@ -29,6 +29,7 @@ class DashboardController extends Controller
             // ));
 
             $resource = $API->comm('/system/resource/print');
+            $identity = $API->comm('/system/identity/print');
 
             
 
@@ -38,6 +39,7 @@ class DashboardController extends Controller
                 'id' => $id,
                 'ip_address' => $ip_address[0]['address'],
                 'board_name'  => $resource[0]['board-name'],
+                'identity' => $identity[0]['name'],
             ];
 
             //dd($data);
