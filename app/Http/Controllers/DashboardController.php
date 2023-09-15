@@ -30,25 +30,9 @@ class DashboardController extends Controller
 
             $resource = $API->comm('/system/resource/print');
 
-            // $limitUptimeArray = array(); // Initialize an empty array to store limit-uptime values
-
-            // foreach ($user as $userInfo) {
-            //     // Check if the 'limit-uptime' key exists in the current user's information
-            //     if (isset($userInfo['limit-uptime'])) {
-
-            //          $duration = $userInfo['limit-uptime'];
-
-            //         list($days, $hours) = sscanf($duration, "%dd%dh");
-            //         $totalHours = ($days * 24) + $hours;
-
-            //         // Add the 'limit-uptime' value to the $limitUptimeArray
-            //         $limitUptimeArray[] = $totalHours;
-            //     }
-            // }
             
-            // $total = array_sum($limitUptimeArray);
-            
-            // dd($total*1000);
+
+             //dd($limitUptimeArray);
 
             $data = [
                 'id' => $id,
@@ -84,7 +68,9 @@ class DashboardController extends Controller
                 'uptime'  => $resource[0]['uptime'],
             ];
 
-            //dd($data);  
+            //dd($data); 
+            
+            
 
             return view('realtime.uptime', $data);
 
@@ -150,9 +136,43 @@ class DashboardController extends Controller
                 '?profile' => 'default'
             ));
 
+            $limitUptimeArray = array(); // Initialize an empty array to store limit-uptime values
+
+            foreach ($hotspot_user as $userInfo) {
+                // Check if the 'limit-uptime' key exists in the current user's information
+                if (isset($userInfo['limit-uptime'])) {
+                    $duration = $userInfo['limit-uptime'];
+
+                    // Extract both days and hours from the duration string
+                    if (preg_match('/(\d+)d(\d+)h/', $duration, $matches)) {
+                        // If both days and hours are present in the format "XdYh"
+                        $days = intval($matches[1]);
+                        $hours = intval($matches[2]);
+                    } elseif (preg_match('/(\d+)h/', $duration, $matches)) {
+                        // If only hours are present in the format "Xh"
+                        $days = 0;
+                        $hours = intval($matches[1]);
+                    } else {
+                        // Handle other formats or invalid input
+                        $days = 0;
+                        $hours = 0;
+                    }
+
+                    // Convert days to hours and add the hours part
+                    $totalHours = ($days * 24) + $hours;
+
+                    // Add the 'totalHours' value to the $limitUptimeArray
+                    $limitUptimeArray[] = $totalHours;
+                }
+            }
+
+            // Calculate the sum of all 'totalHours' values
+            $totalSumHours = array_sum($limitUptimeArray);
+
+
             $data = [
                 'id' => $id,
-                'total_income'  => count($hotspot_user) * 1000,
+                'total_income'  => ($totalSumHours / 2) * 1000 ,
             ];
 
             //dd($data);
