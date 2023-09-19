@@ -159,6 +159,18 @@
                 }
             }
         });
+        $(document).ready(function(){
+    $(".scrollable").click(function(){
+        var currentHeight = $(this).css("max-height");
+        
+        if(currentHeight == "35px") {
+            $(this).css("max-height", "400px"); // Height when expanded
+        } else {
+            $(this).css("max-height", "35px"); // Initial height
+        }
+    });
+});
+
     </script>
 </body>
 </html>

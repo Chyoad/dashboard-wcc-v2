@@ -53,6 +53,40 @@
         background-color: #FF00D6;
     }
 
+    .scrollable {
+        
+        width: 420px; 
+        height: 80px; 
+        border: 1px solid #3498db;
+        border-radius: 5px; 
+        background-color: #ffffff; 
+        padding: 5px;
+        max-height: 35px; /* Adjust according to your preferred initial visible height */
+    overflow: hidden;
+    transition: max-height 0.2s ease-out; /* Smooth transition */
+}
+
+    .scrollable select {
+        border: none;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        outline: none; 
+        font-size: 14px; 
+        color: #333; 
+    }
+
+    
+    .scrollable select option {
+        padding: 5px;
+    }
+
+
+    .scrollable select option:hover {
+        background-color: #3498db;
+        color: #fff;
+    }
+
 </style>
 
     <!-- ========== title-wrapper start ========== -->
@@ -62,6 +96,16 @@
                 <div class="title mb-30">
                     <h2>{{ __('Dashboard') }}</h2>
                     <h3>{{ $identity }}</h3>
+                    <div class="scrollable mt-2">
+                        <select size="6" multiple="multiple">
+                            <option value="1">option 1 The Long Option</option>
+                            <option value="2">option 2</option>
+                            <option value="3">option 3</option>
+                            <option value="4">option 4</option>
+                            <option value="5">option 5</option>
+                            <option value="6">option 6</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <!-- end col -->
@@ -211,5 +255,5 @@
     
 
 </script>
-    
+    
 @endsection

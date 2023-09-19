@@ -47,7 +47,7 @@ class UserController extends Controller
             $data = [
                 'id' => $id,
                 'all_users'  => $hotspot_user ,
-                'count_user' => count($hotspot_user)
+                //'count_user' => count($hotspot_user)
             ];
 
             //dd($data);
@@ -75,15 +75,20 @@ class UserController extends Controller
             $data = [
                 'id' => $id,
                 'active_users' => $hotspot_active,
-                'count_active' => count($hotspot_active)
+                //'count_active' => count($hotspot_active)
             ];
 
             //dd($data);
 
-            return view('realtime.list-user', $data);
+            return view('realtime.list-active-user', $data);
 
         } else{
             return view('failed');
         }
     }
+
+    // public function destroyActiveUser($id) 
+    // {
+
+    // }
 }

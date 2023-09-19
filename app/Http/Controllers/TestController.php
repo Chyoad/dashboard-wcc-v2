@@ -21,8 +21,8 @@ class TestController extends Controller
         
         if ($API->connect($ip, $user, $password)) {
             $query = $API->comm('/ip/hotspot/active/print', array(
-              'address' => '10.0.10.254',
-              'count' => '5',
+                '.proplist' => 'session-time-left',
+                '?session-time-left' => ''
             ));
             // $resource = $API->comm('/system/resource/print');
             // $secret = $API->comm('/ppp/secret/print');
@@ -31,12 +31,14 @@ class TestController extends Controller
             // $routerboard = $API->comm('/system/routerboard/print');
             // $identity = $API->comm('/system/identity/print');
 
+            dd($query);
+
             $data = [
                 // 'totalsecret' => count($secret),
                 // 'totalhotspot' => count($hotspotactive),
                 // 'hotspotactive' => count($hotspotactive),
                 // 'secretactive' => count($secretactive),
-                'ip_address' => $query,
+                'active' => $query,
                 // 'cpu' => $resource[0]['cpu-load'],
                 // 'uptime' => $resource[0]['uptime'],
                 // 'version' => $resource[0]['version'],
@@ -51,7 +53,7 @@ class TestController extends Controller
             // return view('testview', $data);
             dd($data);
         }else{
-            return view('error');
+            return view('failed');
         };
         }
 }

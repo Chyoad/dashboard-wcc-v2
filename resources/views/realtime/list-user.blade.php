@@ -13,14 +13,14 @@
   <tbody>
   @foreach($all_users as $data)
       <tr>
-        <td>{{ $data[".id"] }} </td>
-        <td>{{ $data["name"] }}</td>
-        <td>{{ $data["profile"] }}</td>
-        <td>{{ $data["uptime"] }}</td>
-        <td>{{ $data["limit-uptime"] }}</td>
+        <td>{{ $data[".id"] ?? '' }} </td>
+        <td>{{ $data["name"] ?? '' }}</td>
+        <td>{{ $data["profile"] ?? '' }}</td>
+        <td>{{ $data["uptime"] ?? '' }}</td>
+        <td>{{ $data["limit-uptime"] ?? '' }}</td>
       </tr>
   @endforeach
       <!-- end table row -->
   </tbody>
 </table>
-                    <!-- end table -->
+ <!-- end table -->
