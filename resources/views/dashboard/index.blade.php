@@ -107,7 +107,7 @@
                     </div>
                     <div>
                         <h5 class="card-title mb-2  small">Total User</h5>
-                        <span class="h4 font-weight-bold" id="user">Loading...</span>
+                        <span class="h4 font-weight-bold" id="user-income">Loading...</span>
                     </div>
                 </div>
             </div>
@@ -149,7 +149,7 @@
                     </div>
                     <div>
                         <h5 class="card-title mb-2  small">User Active</h5>
-                    <span class="h4 font-weight-bold" id="today-income">Loading...</span>
+                    <span class="h4 font-weight-bold" id="active-user-income">Loading...</span>
                     </div>
                 </div>
             </div>
@@ -181,22 +181,22 @@
         $('#uptime').load(url);
     }
 
-    setInterval('activeUser();',1000);
-    function activeUser() {
+    setInterval('activeUserIncome();',1000);
+    function activeUserIncome() {
             var id = {{ $id }} ;
-            var url = "{{ route('user.activeUser', ['id' => ':id']) }}";
+            var url = "{{ route('dashboard.activeUserIncome', ['id' => ':id']) }}";
             url = url.replace(':id', id);
 
-            $('#active-user').load(url);
+            $('#active-user-income').load(url);
         }
 
-    setInterval('user();',1000);
-    function user() {
+    setInterval('allUserIncome();',1000);
+    function allUserIncome() {
             var id = {{ $id }} ;
-            var url = "{{ route('user.user', ['id' => ':id']) }}";
+            var url = "{{ route('dashboard.userIncome', ['id' => ':id']) }}";
             url = url.replace(':id', id);
 
-            $('#user').load(url);
+            $('#user-income').load(url);
         }
 
     setInterval('status();',1000);
@@ -208,23 +208,7 @@
             $('#status').load(url);
         }
 
-    setInterval('todayIncome();',1000);
-    function todayIncome() {
-            var id = {{ $id }} ;
-            var url = "{{ route('user.activeUser', ['id' => ':id']) }}";
-            url = url.replace(':id', id);
-
-            $('#today-income').load(url);
-        }
-
-    setInterval('totalIncome();',1000);
-    function totalIncome() {
-            var id = {{ $id }} ;
-            var url = "{{ route('user.user', ['id' => ':id']) }}";
-            url = url.replace(':id', id);
-
-            $('#total-income').load(url);
-        }
+    
 
 </script>
     

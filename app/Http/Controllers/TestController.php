@@ -20,7 +20,7 @@ class TestController extends Controller
         $API->debug = false;
         
         if ($API->connect($ip, $user, $password)) {
-            $ip = $API->comm('/ping', array(
+            $query = $API->comm('/ip/hotspot/active/print', array(
               'address' => '10.0.10.254',
               'count' => '5',
             ));
@@ -36,7 +36,7 @@ class TestController extends Controller
                 // 'totalhotspot' => count($hotspotactive),
                 // 'hotspotactive' => count($hotspotactive),
                 // 'secretactive' => count($secretactive),
-                'ip_address' => $ip,
+                'ip_address' => $query,
                 // 'cpu' => $resource[0]['cpu-load'],
                 // 'uptime' => $resource[0]['uptime'],
                 // 'version' => $resource[0]['version'],

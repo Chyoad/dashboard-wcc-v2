@@ -8,61 +8,27 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show($id){
-        $item = ClientModel::findOrFail($id);
+    public function showUser($id){
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $data = [
+            'id' => $id
+        ];
 
-        $API = new RouterosApi();
-        $API->debug = false;
+        return view('hotspots.all-user', $data);
 
-        if ($API->connect($ip, $user, $password)) {
-            $hotspot_active = $API->comm('/ip/hotspot/active/print');
-
-            $data = [
-            'id' => $id,
-            'uptime'  => $resource[0]['uptime'],
-            ];
-
-            //dd($data);
-
-            return view('realtime.uptime', $data);
-
-        } else{
-            return view('failed');
-        }
     }
 
-    public function activeUser($id) {
-        $item = ClientModel::findOrFail($id);
+    public function showActive($id){
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $data = [
+            'id' => $id
+        ];  
+        
+        return view('hotspots.active-user', $data);
 
-        $API = new RouterosApi();
-        $API->debug = false;
-
-        if ($API->connect($ip, $user, $password)) {
-            $hotspot_active = $API->comm('/ip/hotspot/active/print');
-
-            $data = [
-                'id' => $id,
-                'count_active_user'  => count($hotspot_active),
-            ];
-
-            //dd($data);
-
-            return view('realtime.activeUser', $data);
-
-        } else{
-            return view('failed');
-        }
     }
 
-    public function user($id) {
+    public function listUser($id) {
         $item = ClientModel::findOrFail($id);
 
         $ip = $item['ip'];
@@ -73,18 +39,48 @@ class UserController extends Controller
         $API->debug = false;
 
         if ($API->connect($ip, $user, $password)) {
+
             $hotspot_user = $API->comm('/ip/hotspot/user/print', array(
                 '?profile' => 'default'
             ));
 
             $data = [
                 'id' => $id,
-                'count_user'  => count($hotspot_user),
+                'all_users'  => $hotspot_user ,
+                'count_user' => count($hotspot_user)
             ];
 
             //dd($data);
 
-            return view('realtime.user', $data);
+            return view('realtime.list-user', $data);
+
+        } else{
+            return view('failed');
+        }
+    }
+
+    public function listUserActive($id) {
+        $item = ClientModel::findOrFail($id);
+
+        $ip = $item['ip'];
+        $user = $item['name'];
+        $password = $item['pass'];
+
+        $API = new RouterosApi();
+        $API->debug = false;
+
+        if ($API->connect($ip, $user, $password)) {
+            $hotspot_active = $API->comm('/ip/hotspot/active/print');
+
+            $data = [
+                'id' => $id,
+                'active_users' => $hotspot_active,
+                'count_active' => count($hotspot_active)
+            ];
+
+            //dd($data);
+
+            return view('realtime.list-user', $data);
 
         } else{
             return view('failed');

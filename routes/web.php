@@ -24,29 +24,30 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/failed', function () {
-    return view('failed');
-});
-
-
-
 Route::middleware('auth')->group(function () {
+
+    Route::resource('client', ClientController::class);
+
     Route::view('about', 'about')->name('about');
 
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
-
+    // Profile routes
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
 
+    // Dashboard routes
     Route::get('dashboard/{id}', [DashboardController::class, 'show'])->name('dashboard.show');
     Route::get('dashboard/uptime/{id}', [DashboardController::class, 'uptime'])->name('dashboard.uptime');
     Route::get('dashboard/status/{id}', [DashboardController::class, 'status'])->name('dashboard.status');
+    Route::get('dashboard/user/income/{id}', [DashboardController::class, 'countUserAndIncome'])->name('dashboard.userIncome');
+    Route::get('dashboard/active/income/{id}', [DashboardController::class, 'countActiveUserAndIncome'])->name('dashboard.activeUserIncome');
 
-    Route::get('dashboard/user/{id}', [UserController::class, 'user'])->name('user.user');
-    Route::get('dashboard/active/user/{id}', [UserController::class, 'activeUser'])->name('user.activeUser');
-    
+    // Hotspot routes
+    Route::get('hotspot/list-user/{id}', [UserController::class, 'showUser'])->name('hotspot.showUser');
+    Route::get('hotspot/list-active/{id}', [UserController::class, 'showActive'])->name('hotspot.showActive');
+    Route::get('hotspot/user/{id}', [UserController::class, 'listUser'])->name('hotspot.user');
+    Route::get('hotspot/active/{id}', [UserController::class, 'listUserActive'])->name('hotspot.active');
+
+
     Route::get('test/{id}', [TestController::class, 'index'])->name('user.index');
-    
-    // Route::get('test/', [UserController::class, 'activeUser'])->name('user.activeUser');
+
 });
-Route::resource('client', ClientController::class);

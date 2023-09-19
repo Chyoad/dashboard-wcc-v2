@@ -23,17 +23,8 @@ class DashboardController extends Controller
             $ip_address = $API->comm('/ip/hotspot/ip-binding/print', array(
                 '?comment' => 'NodeMCU'
             ));
-
-            // $user = $API->comm('/ip/hotspot/user/print', array(
-            //     '?profile' => 'default',
-            // ));
-
             $resource = $API->comm('/system/resource/print');
             $identity = $API->comm('/system/identity/print');
-
-            
-
-             //dd($limitUptimeArray);
 
             $data = [
                 'id' => $id,
@@ -71,9 +62,7 @@ class DashboardController extends Controller
             ];
 
             //dd($data); 
-            
-            
-
+    
             return view('realtime.uptime', $data);
 
         } else{
@@ -122,7 +111,7 @@ class DashboardController extends Controller
         }        
     }
 
-    public function income($id)
+    public function countUserAndIncome($id)
     {
         $item = ClientModel :: findOrFail($id);
 
@@ -175,16 +164,48 @@ class DashboardController extends Controller
             $data = [
                 'id' => $id,
                 'total_income'  => ($totalSumHours / 2) * 1000 ,
+                'count_user' => count($hotspot_user)
             ];
 
             //dd($data);
 
-            return view('realtime.income', $data);
+            return view('realtime.total-user-income', $data);
 
         } else{
             return view('failed');
         }
+    }
 
+
+    public function countActiveUserAndIncome($id)
+    {
+
+        $item = ClientModel::findOrFail($id);
+
+        $ip = $item['ip'];
+        $user = $item['name'];
+        $password = $item['pass'];
+
+        $API = new RouterosApi();
+        $API->debug = false;
+
+        if ($API->connect($ip, $user, $password)) {
+            $hotspot_active = $API->comm('/ip/hotspot/active/print');
+
+            $data = [
+                'id' => $id,
+                'count_active_user'  => count($hotspot_active),
+                //'today_income' => count($hotspot_active) * 1000
+            ];
+
+            //dd($data);
+
+            return view('realtime.active-user-income', $data);
+
+        } else{
+            return view('failed');
+        } 
+        
     }
 
 }
