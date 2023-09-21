@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     // Profile routes
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('profile', [ProfileController::class, 'UpdateProfile'])->name('profile.update2');
 
     // Dashboard routes
     Route::get('dashboard/{id}', [DashboardController::class, 'show'])->name('dashboard.show');

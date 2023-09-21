@@ -30,32 +30,18 @@
                     </div>
                 @endif
 
-                <form action="{{ route('profile.update') }}" method="POST">
+                <form action="{{ route('profile.update2') }}" method="POST">
                     @csrf
-                    @method('PUT')
+                    {{-- @method('PUT') --}}
 
                     <div class="row">
                         <div class="col-12">
                             <div class="input-style-1">
-                                <label for="name">{{ __('Name') }}</label>
-                                <input type="text" @error('name') class="form-control is-invalid" @enderror name="name"
-                                       id="name" placeholder="{{ __('Name') }}"
-                                       value="{{ old('name', auth()->user()->name) }}" required>
-                                @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <!-- end col -->
-                        <div class="col-12">
-                            <div class="input-style-1">
-                                <label for="email">{{ __('Email') }}</label>
-                                <input @error('email') class="form-control is-invalid" @enderror type="email"
-                                       name="email" id="email" placeholder="{{ __('Email') }}"
-                                       value="{{ old('email', auth()->user()->email) }}" required>
-                                @error('email')
+                                <label for="username">{{ __('Name') }}</label>
+                                <input type="text" @error('username') class="form-control is-invalid" @enderror name="username"
+                                       id="username" placeholder="{{ __('Name') }}"
+                                       value="{{ old('username', auth()->user()->username) }}" required>
+                                @error('username')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
