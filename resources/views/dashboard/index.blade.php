@@ -53,6 +53,40 @@
         background-color: #FF00D6;
     }
 
+    .scrollable {
+        
+        width: 420px; 
+        height: 80px; 
+        border: 1px solid #3498db;
+        border-radius: 5px; 
+        background-color: #ffffff; 
+        padding: 5px;
+        max-height: 35px; /* Adjust according to your preferred initial visible height */
+    overflow: hidden;
+    transition: max-height 0.2s ease-out; /* Smooth transition */
+}
+
+    .scrollable select {
+        border: none;
+        background-color: transparent;
+        width: 100%;
+        height: 100%;
+        outline: none; 
+        font-size: 14px; 
+        color: #333; 
+    }
+
+    
+    .scrollable select option {
+        padding: 5px;
+    }
+
+
+    .scrollable select option:hover {
+        background-color: #3498db;
+        color: #fff;
+    }
+
 </style>
 
     <!-- ========== title-wrapper start ========== -->
@@ -61,6 +95,17 @@
             <div class="col-md-6">
                 <div class="title mb-30">
                     <h2>{{ __('Dashboard') }}</h2>
+                    <h3>{{ $identity }}</h3>
+                    <div class="scrollable mt-2">
+                        <select size="6" multiple="multiple">
+                            <option value="1">option 1 The Long Option</option>
+                            <option value="2">option 2</option>
+                            <option value="3">option 3</option>
+                            <option value="4">option 4</option>
+                            <option value="5">option 5</option>
+                            <option value="6">option 6</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <!-- end col -->
@@ -72,114 +117,87 @@
     <!-- Cards Row -->
     <div class="row">
     <!-- ========== First Card with Blue Icon Box ========== -->
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box blue">
-                <i class="fa-solid fa-clipboard" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">IP Address</h5>
-                    {{-- <span class="h4 font-weight-bold">{{ $identityQuery[0]['address'] }}</span> --}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box red">
-                <i class="fa-solid fa-user" style="color: #ffffff;" ></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Total User</h5>
-                    <span class="h4 font-weight-bold" id="user">0 Users</span>
+        <div class="col-lg-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box blue">
+                    <i class="fa-solid fa-clipboard" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">IP Address</h5>
+                        <span class="h4 font-weight-bold">{{ $ip_address }}</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box green">
-                <i class="fas fa-users" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Online User</h5>
-                     <span class="h4 font-weight-bold" id="active-user">
-                        
-                    </span>
+        <div class="col-lg-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box yellow">
+                    <i class="fa-solid fa-wifi" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">NodeMCU Status</h5>
+                        <span class="h4 font-weight-bold" id="status">Loading...</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box yellow">
-                <i class="fa-solid fa-wifi" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Internet Status</h5>
-                    <span class="h4 font-weight-bold">Online</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box purple">
-                <i class="fas fa-cloud" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">System Runtime</h5>
-                    <span class="h4 font-weight-bold" id="uptime"></span>
+        <div class="col-lg-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box red">
+                    <i class="fa-solid fa-user" style="color: #ffffff;" ></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">Total User</h5>
+                        <span class="h4 font-weight-bold" id="user-income">Loading...</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box orange">
-                <i class="fa-solid fa-microchip" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Board Name</h5>   
-                    {{-- <span class="h4 font-weight-bold">{{ $typeQuery[0]['board-name'] }}</span> --}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box birumuda">
-                <i class="fa-solid fa-money-bill" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Today Income</h5>
-                    {{-- <span class="h4 font-weight-bold"></span> --}}
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 mt-4">
-        <div class="card card-stats">
-            <div class="card-body d-flex align-items-center">
-                <div class="icon-box pink">
-                <i class="fa-solid fa-money-bills" style="color: #ffffff;"></i>
-                </div>
-                <div>
-                    <h5 class="card-title mb-2  small">Total Income</h5>
-                    {{-- <span class="h4 font-weight-bold">Rp.{{ number_format($countUser*1000) }}</span> --}}
-                </div>
-            </div>
-        </div>
-    </div>
+        </div> 
+    </div>   
 
+    <div class="row">
+        <div class="col-lg-4 mt-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box purple">
+                    <i class="fas fa-cloud" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">System Runtime</h5>
+                        <span class="h4 font-weight-bold" id="uptime">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mt-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box orange">
+                    <i class="fa-solid fa-microchip" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">Board Name</h5>   
+                        <span class="h4 font-weight-bold">{{ $board_name }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 mt-4">
+            <div class="card card-stats" style="height: 10rem">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-box birumuda">
+                    <i class="fa-solid fa-money-bill" style="color: #ffffff;"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-2  small">User Active</h5>
+                    <span class="h4 font-weight-bold" id="active-user-income">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- End Cards Row -->
     <div class="row mt-3">
@@ -207,24 +225,35 @@
         $('#uptime').load(url);
     }
 
-    setInterval('activeUser();',1000);
-    function activeUser() {
+    setInterval('activeUserIncome();',1000);
+    function activeUserIncome() {
             var id = {{ $id }} ;
-            var url = "{{ route('user.activeUser', ['id' => ':id']) }}";
+            var url = "{{ route('dashboard.activeUserIncome', ['id' => ':id']) }}";
             url = url.replace(':id', id);
 
-            $('#active-user').load(url);
-        }
+            $('#active-user-income').load(url);
+        }
 
-    setInterval('user();',1000);
-    function user() {
+    setInterval('allUserIncome();',1000);
+    function allUserIncome() {
             var id = {{ $id }} ;
-            var url = "{{ route('user.user', ['id' => ':id']) }}";
+            var url = "{{ route('dashboard.userIncome', ['id' => ':id']) }}";
             url = url.replace(':id', id);
 
-            $('#user').load(url);
+            $('#user-income').load(url);
         }
+
+    setInterval('status();',1000);
+    function status() {
+            var id = {{ $id }} ;
+            var url = "{{ route('dashboard.status', ['id' => ':id']) }}";
+            url = url.replace(':id', id);
+
+            $('#status').load(url);
+        }
+
+    
 
 </script>
-    
+    
 @endsection

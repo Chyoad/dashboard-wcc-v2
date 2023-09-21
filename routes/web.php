@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+
 
 
 /*
@@ -17,35 +20,34 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->name('test');
-
-
-Route::get('/welcome', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::view('about', 'about')->name('about');
-
-    Route::get('users', [\App\Http\Controllers\UserController::class, 'index'])->name('users.index');
-
-    Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
-    Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
-
-    
-    Route::get('dashboard/{id}', [DashboardController::class, 'show'])->name('dashboard.show');
-    //Route::get('dashboard/{id}/uptime', [DashboardController::class, 'uptime'])->name('dashboard.uptime');
-    Route::get('dashboard/uptime/{id}', [DashboardController::class, 'uptime'])->name('dashboard.uptime');
-    Route::get('dashboard/user/{id}', [UserController::class, 'user'])->name('user.user');
-    Route::get('dashboard/active/user/{id}', [UserController::class, 'activeUser'])->name('user.activeUser');
-
-
 
     Route::resource('client', ClientController::class);
-    // Route::get('client', [\App\Http\Controllers\ClientController::class, 'index'])->name('client-index');
-    // Route::POST('client/store', [\App\Http\Controllers\ClientController::class, 'store'])->name('client-store');
+
+    Route::view('about', 'about')->name('about');
+
+    // Profile routes
+    Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Dashboard routes
+    Route::get('dashboard/{id}', [DashboardController::class, 'show'])->name('dashboard.show');
+    Route::get('dashboard/uptime/{id}', [DashboardController::class, 'uptime'])->name('dashboard.uptime');
+    Route::get('dashboard/status/{id}', [DashboardController::class, 'status'])->name('dashboard.status');
+    Route::get('dashboard/user/income/{id}', [DashboardController::class, 'countUserAndIncome'])->name('dashboard.userIncome');
+    Route::get('dashboard/active/income/{id}', [DashboardController::class, 'countActiveUserAndIncome'])->name('dashboard.activeUserIncome');
+
+    // Hotspot routes
+    Route::get('hotspot/list-user/{id}', [UserController::class, 'showUser'])->name('hotspot.showUser');
+    Route::get('hotspot/list-active/{id}', [UserController::class, 'showActive'])->name('hotspot.showActive');
+    Route::get('hotspot/user/{id}', [UserController::class, 'listUser'])->name('hotspot.user');
+    Route::get('hotspot/active/{id}', [UserController::class, 'listUserActive'])->name('hotspot.active');
+
+
+    Route::get('test/{id}', [TestController::class, 'index'])->name('user.index');
+
 });
