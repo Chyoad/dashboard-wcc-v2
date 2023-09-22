@@ -16,6 +16,20 @@
     </div>
     <!-- ========== title-wrapper end ========== -->
     <div class="card-styles">
+        {{-- @if ($errors->any())
+        <div class="form-group mt-4 mb-4">
+            <div class="pull-right alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+
+        @endif --}}
+
         <div class="card-style-3 mb-30">
             <div class="card-content">
                 <div class="table-wrapper table-responsive">
@@ -39,11 +53,11 @@
                                 <td>{{ $item->name }}</td>
                                 <td>
                                     <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('client.destroy', $item->id) }}" method="POST">
-                                        <a href="{{ route('client.edit', $item->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pencil"></i></a>
+                                        <a href="{{ route('client.edit', $item->id) }}" class="btn btn-primary"><i class="fas fa-pencil"></i></a>
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                                        <a href="{{ route('dashboard.show', $item->id) }}" class="btn btn-sm btn-success    "><i class="fas fa-plug"></i></a>
+                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                        <a href="{{ route('dashboard.show', $item->id) }}" class="btn btn-success"><i class="fas fa-plug"></i></a>
                                     </form>
                                 </td>
                             </tr>
@@ -59,4 +73,5 @@
             </div>
         </div>
     </div>
+    
 @endsection
