@@ -29,6 +29,7 @@
         </div>
 
         @endif --}}
+        <div id="alertMessage" class="alert" style="display: none;"></div>
 
         <div class="card-style-3 mb-30">
             <div class="card-content">
@@ -46,7 +47,7 @@
                         </thead>
                         <tbody>
             
-                            @foreach ($clients as $item)
+                            @forelse ($clients as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->ip }}</td>
@@ -59,9 +60,18 @@
                                         <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                                         <a href="{{ route('dashboard.show', $item->id) }}" class="btn btn-success"><i class="fas fa-plug"></i></a>
                                     </form>
+
+                                    <button id="checkMikrotikStatusButton" class="btn btn-warning" onclick="checkMikrotikStatus({{ $item->id }})">Check MikroTik Status</button>
+                                    <div id="mikrotikStatusResult"></div>
+
                                 </td>
                             </tr>
-                            @endforeach
+                             @empty
+                                <div class="alert alert-danger">
+                                    Data Router belum Tersedia.
+                                </div>
+                            @endforelse
+                    
                             
                         <!-- end table row -->
                         </tbody>
@@ -73,5 +83,45 @@
             </div>
         </div>
     </div>
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function checkMikrotikStatus(serverId) {
+    // Get the CSRF token value from the page's meta tag
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        url: '{{ route('checkMikrotikStatus') }}',
+        type: 'POST',
+        data: {
+            id: serverId,
+            _token: csrfToken, // Include the CSRF token
+        },
+        success: function(response) {
+            // Display success message
+            showAlert('success', response.message + ' - RouterOS Version: ' + response.routerOSVersion + ' - Board Name: ' + response.boardName);
+        },
+        error: function(xhr, status, error) {
+            // Display error message
+            showAlert('error', 'Error: ' + xhr.responseText);
+        }
+    });
+}
+
+function showAlert(type, message) {
+    var alertElement = $('#alertMessage');
     
+    // Set the appropriate alert class based on the type
+    var alertClass = (type === 'success') ? 'alert-success' : 'alert-danger';
+
+    alertElement.removeClass('alert-success alert-danger').addClass(alertClass).text(message).fadeIn();
+
+    // Automatically hide the alert after 5 seconds (5000 milliseconds)
+    setTimeout(function() {
+        alertElement.fadeOut('slow');
+    }, 5000);
+}
+
+</script> 
+   
 @endsection
