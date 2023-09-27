@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\RouterosApi;
 use Illuminate\Http\Request;
 use App\Models\Client as ClientModel;
@@ -9,6 +10,8 @@ use App\Models\Client as ClientModel;
 class DashboardController extends Controller
 {
     public function show($id){
+
+        $clients = Client::all();
 
         $item = ClientModel::findOrFail($id);
 
@@ -31,9 +34,8 @@ class DashboardController extends Controller
                 'ip_address' => $ip_address[0]['address'],
                 'board_name'  => $resource[0]['board-name'],
                 'identity' => $identity[0]['name'],
+                'clients' => $clients
             ];
-
-            //dd($data);
 
             return view('dashboard.index', $data);
 

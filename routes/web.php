@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MikrotikController;
 use App\Http\Controllers\DashboardController;
 
 
@@ -40,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard/status/{id}', [DashboardController::class, 'status'])->name('dashboard.status');
     Route::get('dashboard/user/income/{id}', [DashboardController::class, 'countUserAndIncome'])->name('dashboard.userIncome');
     Route::get('dashboard/active/income/{id}', [DashboardController::class, 'countActiveUserAndIncome'])->name('dashboard.activeUserIncome');
+
+    // check mikrotik status
+    Route::post('dashboard/checkMikrotikStatus', [MikrotikController::class, 'checkMikrotikStatus'])->name('checkMikrotikStatus');
 
     // Hotspot routes
     Route::get('hotspot/list-user/{id}', [UserController::class, 'showUser'])->name('hotspot.showUser');
