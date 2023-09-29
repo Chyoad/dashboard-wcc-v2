@@ -1,5 +1,5 @@
 <ul>
-    @if(!in_array(request()->route()->getName(), ['dashboard.show', 'hotspot.showUser', 'hotspot.showActive', 'client.index']))
+    @if(!in_array(request()->route()->getName(), ['dashboard.show', 'hotspot.showUser', 'hotspot.showActive', 'profile.show']))
         <!-- Bagian Dashboard Mitra -->
         <!-- Dashboard Link -->
         <li class="nav-item @if(request()->routeIs('home')) active @endif">
@@ -45,7 +45,7 @@
         <!-- Bagian Dashboard IP -->
 
         <!-- Dashboard Link -->
-        <li class="nav-item @if(request()->routeIs('dashboard.show', $id)) active @endif">
+        <li class="nav-item @if(request()->routeIs('dashboard.show')) active @endif">
             <a href="{{ route('dashboard.show', $id) }}">
                 <span class="icon">
                 <i class="fa-solid fa-house"></i>

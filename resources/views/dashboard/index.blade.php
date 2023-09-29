@@ -96,16 +96,22 @@
                 <div class="title mb-30">
                     <h2>{{ __('Dashboard') }}</h2>
                     <h3>{{ $identity }}</h3>
-                    <div class="scrollable mt-2">
-                        <select size="6" multiple="multiple">
-                            <option value="1">option 1 The Long Option</option>
-                            <option value="2">option 2</option>
-                            <option value="3">option 3</option>
-                            <option value="4">option 4</option>
-                            <option value="5">option 5</option>
-                            <option value="6">option 6</option>
-                        </select>
-                    </div>
+                    <ul class="dropdown-menu">
+                        <li><span class="dropdown-item-text">Dropdown item text</span></li>
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                    
+                    <div class="ui scrolling dropdown mt-2">
+                        <div class="text">Scrolling DropDown</div>
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            @foreach ($clients as $client)
+                                <div class="item"><a href="{{ route('dashboard.show', $client['id']) }}">{{ $client['ip'] }}</a></div>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- end col -->
@@ -256,4 +262,11 @@
 
 </script>
     
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script>
+    $('.ui.dropdown').dropdown();
+</script>
+
 @endsection
