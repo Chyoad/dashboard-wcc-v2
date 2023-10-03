@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('servers', function (Blueprint $table) {
             $table->id();
-            $table->string('ip');
             $table->string('name');
-            $table->string('pass');
+            $table->string('host');
+            $table->string('username');
+            $table->string('password');
+            $table->string('port');
+            $table->string('slug');
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('servers');
     }
 };

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+Dashbaord Server Page
+@endsection
+
 @section('content')
 
 <!-- Inline CSS for icons and colors -->
@@ -107,8 +111,8 @@
                         <div class="text">Scrolling DropDown</div>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            @foreach ($clients as $client)
-                                <div class="item"><a href="{{ route('dashboard.show', $client['id']) }}">{{ $client['ip'] }}</a></div>
+                            @foreach ($servers as $server)
+                                <div class="item"><a href="{{ route('dashboard.show', $server['id']) }}">{{ $server['host'] }}</a></div>
                             @endforeach
                         </div>
                     </div>

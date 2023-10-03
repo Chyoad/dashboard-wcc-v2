@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client as ClientModel;
+use App\Models\Server;
 use App\Models\RouterosApi;
 use Illuminate\Http\Request;
 
@@ -29,16 +29,16 @@ class UserController extends Controller
     }
 
     public function listUser($id) {
-        $item = ClientModel::findOrFail($id);
+        $item = Server::findOrFail($id);
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $host = $item['host'];
+        $user = $item['username'];
+        $password = $item['password'];
 
         $API = new RouterosApi();
         $API->debug = false;
 
-        if ($API->connect($ip, $user, $password)) {
+        if ($API->connect($host, $user, $password)) {
 
             $hotspot_user = $API->comm('/ip/hotspot/user/print', array(
                 '?profile' => 'default'
@@ -50,7 +50,7 @@ class UserController extends Controller
                 //'count_user' => count($hotspot_user)
             ];
 
-            //dd($data);
+            // dd($data);
 
             return view('realtime.list-user', $data);
 
@@ -60,16 +60,16 @@ class UserController extends Controller
     }
 
     public function listUserActive($id) {
-        $item = ClientModel::findOrFail($id);
+        $item = Server::findOrFail($id);
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $host = $item['host'];
+        $user = $item['username'];
+        $password = $item['password'];
 
         $API = new RouterosApi();
         $API->debug = false;
 
-        if ($API->connect($ip, $user, $password)) {
+        if ($API->connect($host, $user, $password)) {
             $hotspot_active = $API->comm('/ip/hotspot/active/print');
 
             $data = [
@@ -78,7 +78,7 @@ class UserController extends Controller
                 //'count_active' => count($hotspot_active)
             ];
 
-            //dd($data);
+            // dd($data);
 
             return view('realtime.list-active-user', $data);
 
@@ -87,8 +87,4 @@ class UserController extends Controller
         }
     }
 
-    // public function destroyActiveUser($id) 
-    // {
-
-    // }
 }

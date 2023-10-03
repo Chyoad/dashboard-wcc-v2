@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\Server;
 use App\Models\RouterOsApi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,21 +11,23 @@ class MikrotikController extends Controller
 {
     public function checkMikrotikStatus(Request $request)
     {
-        $router = Client::findOrFail($request->id);
-        $ip = $router->ip;
-        $user = $router->name;
-        $password = $router->pass;
-
+        $router = Server::findOrFail($request->id);
+        $ip = $router->host;
+        $user = $router->username;
+        $password = $router->password;
+         
         $API = new RouterOsApi();   
 
         try {
             $API->debug = false;
             if ($API->connect($ip, $user, $password)) {
                 $response = $API->comm('/system/resource/print');
+                $identity = $API->comm('/system/identity/print');
 
                 // Extract the RouterOS version
                 $routerOSVersion = $response[0]['version'];
                 $boardName = $response[0]['board-name'];
+                $identityName = $identity[0]['name'];
 
                 $API->disconnect();
 
@@ -35,6 +37,8 @@ class MikrotikController extends Controller
                     'message' => 'MikroTik is online',
                     'routerOSVersion' => $routerOSVersion,
                     'boardName' => $boardName,
+                    'identityName' => $identityName,
+                    
                 ]);
             } else {
                 return response()->json([

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\Server;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\ClientRequest;
+use App\Http\Requests\ServerRequest;
 
-class ClientController extends Controller
+class ServerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +16,9 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        $servers = Server::all();
         return view('home', [
-            'clients' => $clients
+            'servers' => $servers
         ]);
     }
 
@@ -28,7 +29,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-         return view('client.create');
+         return view('server.create');
     }
 
     /**
@@ -37,12 +38,14 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRequest $request)
+    public function store(ServerRequest $request)
     {
         $data = $request->all();
-        $client = Client::create($data);
+        $data['slug'] = Str::slug($request->name);
 
-        return redirect()->route('client.index');
+        $server = Server::create($data);
+
+        return redirect()->route('home');
     }
 
     /**
@@ -64,8 +67,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        $item = Client::findOrFail($id);
-        return view('client.edit', [
+        $item = Server::findOrFail($id);
+        return view('server.edit', [
             'item' => $item
         ]);
     }
@@ -77,10 +80,12 @@ class ClientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ServerRequest $request, $id)
     {
         $data = $request->all();
-        $item = Client::findOrFail($id);
+        $data['slug'] = Str::slug($request->name);
+        
+        $item = Server::findOrFail($id);
         $item->update($data);
 
         return redirect()->route('home');
@@ -94,7 +99,7 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $item = Client::findOrFail($id);
+        $item = Server::findOrFail($id);
         $item->delete();
         return redirect()->route('home');
     }

@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class Server extends Model
 {
     protected $fillable = [
-        'ip', 'name', 'pass',
+        'name', 'host', 'username', 'password', 'port', 'slug'
     ];
     use HasFactory;
 }

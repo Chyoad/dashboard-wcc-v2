@@ -1,5 +1,5 @@
 <ul>
-    @if(!in_array(request()->route()->getName(), ['dashboard.show', 'hotspot.showUser', 'hotspot.showActive', 'client.index']))
+    @if(!in_array(request()->route()->getName(), ['dashboard.show', 'hotspot.showUser', 'hotspot.showActive', 'server.index']))
         <!-- Bagian Dashboard Mitra -->
         <!-- Dashboard Link -->
         <li class="nav-item @if(request()->routeIs('home')) active @endif">
@@ -74,8 +74,8 @@
         </li>
 
         <!-- Traffic Link -->
-        <li class="nav-item @if(request()->routeIs('client.index')) active @endif">
-            <a href="{{ route('client.index') }}">
+        <li class="nav-item @if(request()->routeIs('server.index')) active @endif">
+            <a href="{{ route('server.index') }}">
                 <span class="icon">
                 <i class="fa-solid fa-wifi"></i>
                 </span>
@@ -84,8 +84,8 @@
         </li>
 
         <!-- Report Link -->
-        <li class="nav-item @if(request()->routeIs('client.index')) active @endif">
-            <a href="{{ route('client.index') }}">
+        <li class="nav-item @if(request()->routeIs('server.index')) active @endif">
+            <a href="{{ route('server.index') }}">
                 <span class="icon">
                 <i class="fa-solid fa-inbox"></i>
                 </span>

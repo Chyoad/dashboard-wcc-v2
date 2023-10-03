@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
+@section('title')
+Home Page
+@endsection
+
 @section('content')
     <!-- ========== title-wrapper start ========== -->
     <div class="title-wrapper pt-30">
         <div class="row align-items-center">
             <div class="col-md-6">
                 <div class="title mb-30">
-                    <h2>{{ __('List All Mitra') }}</h2>
-                    <a href="{{ route('client.create') }}" class="btn btn-primary mt-2"> + Add Mitra</a>
+                    <h2>{{ __('List All Server') }}</h2>
+                    <a href="{{ route('server.create') }}" class="btn btn-primary mt-2"> + Add Server</a>
                 </div>
             </div>
             <!-- end col -->
@@ -39,32 +43,38 @@
                             {{-- <h1>User Active</h1> --}}
                         <tr>
                             <th><h6>ID</h6></th>
-                            <th><h6>Ip Address</h6></th>
                             <th><h6>Name</h6></th>
+                            <th><h6>Ip Address</h6></th>
+                            <th><h6>Host</h6></th>
+                            <th><h6>Port</h6></th>
                             <th><h6>Action</h6></th>
                         </tr>
                         <!-- end table row-->
                         </thead>
                         <tbody>
             
-                            @forelse ($clients as $item)
+                            @forelse ($servers as $item)
                             <tr>
                                 <td>{{ $item->id }}</td>
-                                <td>{{ $item->ip }}</td>
                                 <td>{{ $item->name }}</td>
+                                <td>{{ $item->host }}</td>
+                                <td>{{ $item->username }}</td>
+                                <td>{{ $item->port }}</td>
                                 <td>
-                                    <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('client.destroy', $item->id) }}" method="POST">
-                                        <a href="{{ route('client.edit', $item->id) }}" class="btn btn-primary"><i class="fas fa-pencil"></i></a>
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                        <a href="{{ route('dashboard.show', $item->id) }}" class="btn btn-success"><i class="fas fa-plug"></i></a>
-                                    </form>
+                                    <div class="d-flex align-items-center">
+                                        <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('server.destroy', $item->id) }}" method="POST" class="mr-2">
+                                            <a href="{{ route('dashboard.show', $item->id) }}" class="btn btn-success"><i class="fas fa-home"></i></a>
+                                            <a href="{{ route('server.edit', $item->id) }}" class="btn btn-primary"><i class="fas fa-pencil"></i></a>
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                        </form>
 
-                                    <button id="checkMikrotikStatusButton" class="btn btn-warning" onclick="checkMikrotikStatus({{ $item->id }})">Check MikroTik Status</button>
+                                        <button id="checkMikrotikStatusButton" class="btn btn-warning mx-1" onclick="checkMikrotikStatus({{ $item->id }})"><i class="fas fa-plug"></i></button>
+                                    </div>
                                     <div id="mikrotikStatusResult"></div>
-
                                 </td>
+
                             </tr>
                              @empty
                                 <div class="alert alert-danger">
@@ -99,7 +109,7 @@
         },
         success: function(response) {
             // Display success message
-            showAlert('success', response.message + ' - RouterOS Version: ' + response.routerOSVersion + ' - Board Name: ' + response.boardName);
+            showAlert('success', response.message + ' - Server: ' + response.identityName + ' - RouterOS Version: ' + response.routerOSVersion + ' - Board Name: ' + response.boardName);
         },
         error: function(xhr, status, error) {
             // Display error message

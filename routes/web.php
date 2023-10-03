@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ServerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MikrotikController;
 use App\Http\Controllers\DashboardController;
@@ -27,7 +27,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::middleware('auth')->group(function () {
 
-    Route::resource('client', ClientController::class);
+    Route::resource('server', ServerController::class);
 
     Route::view('about', 'about')->name('about');
 

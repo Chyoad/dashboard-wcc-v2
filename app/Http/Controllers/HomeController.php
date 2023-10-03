@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use RouterOS\Query;
-use App\Models\Client;
+use App\Models\Server;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,8 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Initiate client with config object
-        // $client = new Client([
+        // Initiate server with config object
+        // $server = new Server([
         //     'host' => '172.16.115.222',
         //     'user' => 'admin',
         //     'pass' => 'admin',
@@ -41,10 +41,10 @@ class HomeController extends Controller
         // $type = new Query('/system/resource/print');
 
         // // Send the query and read the response from RouterOS
-        // $totalUserQuery = $client->query($userQuery)->read();
-        // $totalUserActiveQuery = $client->query($userActiveQuery)->read();
-        // $identityQuery = $client->query($identity)->read();
-        // $typeQuery = $client->query($type)->read();
+        // $totalUserQuery = $server->query($userQuery)->read();
+        // $totalUserActiveQuery = $server->query($userActiveQuery)->read();
+        // $identityQuery = $server->query($identity)->read();
+        // $typeQuery = $server->query($type)->read();
 
         
         // // dd($typeQuery);
@@ -61,15 +61,15 @@ class HomeController extends Controller
         //     'typeQuery' => $typeQuery
         // ]);
 
-        $clients= Client::all();
+        $servers= Server::all();
 
         return view('home', [
-            'clients' => $clients
+            'servers' => $servers
         ]);
     }
 
     // public function uptime() {
-    //     $client = new Client([
+    //     $server = new Server([
     //         'host' => '111.92.166.114',
     //         'user' => 'admin',
     //         'pass' => 'admin',
@@ -77,7 +77,7 @@ class HomeController extends Controller
     //     ]); 
 
     //     $uptime = new Query('/system/resource/print');
-    //     $uptimeQuery = $client->query($uptime)->read();
+    //     $uptimeQuery = $server->query($uptime)->read();
     //     $data = [
     //         'uptime' => $uptimeQuery['0']['uptime'],
     //     ];

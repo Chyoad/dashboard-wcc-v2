@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+List All User Page
+@endsection
+
 @section('content')
     <!-- ========== title-wrapper start ========== -->
     <div class="title-wrapper pt-30">

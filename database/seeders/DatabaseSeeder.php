@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
+use App\Models\Server;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -23,9 +26,18 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        DB::table('users')->insert([
+        User::create([
             'username' => 'admin',
-            'password' => Hash::make('88888888'),
+            'password' => bcrypt('88888888'),
+        ]);
+
+        Server::create([
+            'name' => 'admin',
+            'host' => '172.16.115.222',
+            'username' => 'admin',
+            'password'=> 'admin',
+            'port' => '8728',
+            'slug' => Str::slug('admin')
         ]);
     }
 }

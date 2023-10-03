@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
+use App\Models\Server;
 use App\Models\RouterosApi;
 use Illuminate\Http\Request;
-use App\Models\Client as ClientModel;
+use App\Models\Server as ServerModel;
 
 class DashboardController extends Controller
 {
     public function show($id){
 
-        $clients = Client::all();
+        $servers = Server::all();
 
-        $item = ClientModel::findOrFail($id);
+        $item = ServerModel::findOrFail($id);
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $ip = $item['host'];
+        $user = $item['username'];
+        $password = $item['password'];
 
         $API = new RouterosApi();
         $API->debug = false;
@@ -34,7 +34,7 @@ class DashboardController extends Controller
                 'ip_address' => $ip_address[0]['address'],
                 'board_name'  => $resource[0]['board-name'],
                 'identity' => $identity[0]['name'],
-                'clients' => $clients
+                'servers' => $servers
             ];
 
             return view('dashboard.index', $data);
@@ -46,11 +46,11 @@ class DashboardController extends Controller
 
     public function uptime($id) 
     {
-        $item = ClientModel::findOrFail($id);
+        $item = ServerModel::findOrFail($id);
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $ip = $item['host'];
+        $user = $item['username'];
+        $password = $item['password'];
 
         $API = new RouterosApi();
         $API->debug = false;
@@ -74,11 +74,11 @@ class DashboardController extends Controller
 
     public function status($id) 
     {
-        $item = ClientModel::findOrFail($id);
+        $item = ServerModel::findOrFail($id);
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $ip = $item['host'];
+        $user = $item['username'];
+        $password = $item['password'];
 
         $API = new RouterosApi();
         $API->debug = false;
@@ -115,19 +115,20 @@ class DashboardController extends Controller
 
     public function countUserAndIncome($id)
     {
-        $item = ClientModel :: findOrFail($id);
+        $item = ServerModel :: findOrFail($id);
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $ip = $item['host'];
+        $user = $item['username'];
+        $password = $item['password'];
 
         $API = new RouterosApi();
         $API->debug = false;
 
         if ($API->connect($ip, $user, $password)) {
-            $hotspot_user = $API->comm('/ip/hotspot/user/print', array(
-                '?profile' => 'default'
-            ));
+            $hotspot_user = $API->comm('/ip/hotspot/user/print');
+            // $hotspot_user = $API->comm('/ip/hotspot/user/print', array(
+            //     '?profile' => 'default'
+            // ));
 
             $limitUptimeArray = array(); // Initialize an empty array to store limit-uptime values
 
@@ -182,11 +183,11 @@ class DashboardController extends Controller
     public function countActiveUserAndIncome($id)
     {
 
-        $item = ClientModel::findOrFail($id);
+        $item = ServerModel::findOrFail($id);
 
-        $ip = $item['ip'];
-        $user = $item['name'];
-        $password = $item['pass'];
+        $ip = $item['host'];
+        $user = $item['username'];
+        $password = $item['password'];
 
         $API = new RouterosApi();
         $API->debug = false;
